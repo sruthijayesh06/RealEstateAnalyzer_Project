@@ -47,10 +47,6 @@ title,location,city,price_total_inr,price_per_sqft,area_sqft,bedrooms,bathrooms,
 ,Siddharths Vihaan,Hyderabad,14200000.0,7139.0,1989.0,,,
 ,Vineyard Golden Oak,Hyderabad,8000000.0,5128.0,1450.0,,,
 ,Buildwell Acropolis,Hyderabad,8500000.0,7013.0,1212.0,,,
-<<<<<<< HEAD
-,Janapriya Lakefront,Hyderabad,5680000.0,5436.0,945.0,,,
-=======
->>>>>>> 2ab66e9852582f16094895dea129ba2c808908ac
 ,Raheja Sterling,Pune,8500000.0,,800.0,,,
 ,Vision 24Degree,Pune,8100000.0,3362.0,941.0,,,
 ,VTP Earth One,Pune,18400000.0,9100.0,1446.0,,,
