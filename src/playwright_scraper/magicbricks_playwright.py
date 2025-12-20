@@ -6,12 +6,11 @@ from data_cleaner import clean_location_csv
 from playwright.sync_api import sync_playwright
 
 #39 cities in india included here. 
-CITIES = ["mumbai","thane","navi-mumbai","pune","delhi","noida","gurgaon","jaipur","udaipur","ahmedabad","surat",
+#note:change trivandrum n mysuru. wrong link
+CITIES = ["mumbai","thane","navi-mumbai","pune","new-delhi","noida","gurgaon","jaipur","udaipur","ahmedabad","surat",
           "vadodara","indore","bhopal","lucknow","kanpur","patna","gaya","kolkata","howrah","bhubaneswar","cuttack",
           "ranchi","jamshedpur","raipur","bilaspur","nagpur","nashik","aurangabad","bengaluru","mysuru","chennai","coimbatore",
           "hyderabad","warangal","kochi","thiruvananthapuram","thrissur","kottayam"]
-
-# -------------------- HELPERS --------------------
 
 def build_city_url(city_slug):
     return (
@@ -31,7 +30,7 @@ def auto_scroll(page, scrolls=6):
 def safe_text(el):
     return el.inner_text().strip() if el else None
 
-# -------------------- PARSERS --------------------
+#PARSERS
 
 def parse_price(price_text):
     """
