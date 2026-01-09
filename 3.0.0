@@ -1,0 +1,17 @@
+Collecting Flask
+  Downloading flask-3.1.2-py3-none-any.whl.metadata (3.2 kB)
+Requirement already satisfied: blinker>=1.9.0 in c:\users\sruth\appdata\local\programs\python\python311\lib\site-packages (from Flask) (1.9.0)
+Requirement already satisfied: click>=8.1.3 in c:\users\sruth\appdata\local\programs\python\python311\lib\site-packages (from Flask) (8.3.1)
+Collecting itsdangerous>=2.2.0 (from Flask)
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Requirement already satisfied: jinja2>=3.1.2 in c:\users\sruth\appdata\local\programs\python\python311\lib\site-packages (from Flask) (3.1.6)
+Requirement already satisfied: markupsafe>=2.1.1 in c:\users\sruth\appdata\local\programs\python\python311\lib\site-packages (from Flask) (3.0.3)
+Collecting werkzeug>=3.1.0 (from Flask)
+  Downloading werkzeug-3.1.5-py3-none-any.whl.metadata (4.0 kB)
+Requirement already satisfied: colorama in c:\users\sruth\appdata\local\programs\python\python311\lib\site-packages (from click>=8.1.3->Flask) (0.4.6)
+Downloading flask-3.1.2-py3-none-any.whl (103 kB)
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading werkzeug-3.1.5-py3-none-any.whl (225 kB)
+Installing collected packages: werkzeug, itsdangerous, Flask
+
+Successfully installed Flask-3.1.2 itsdangerous-2.2.0 werkzeug-3.1.5

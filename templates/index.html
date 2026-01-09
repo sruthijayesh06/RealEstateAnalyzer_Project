@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-building"></i>
+                    <span>RE Analyzer</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Main</h3>
+                    <ul>
+                        <li>
+                            <a href="#" data-page="dashboard" class="nav-link active">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-page="properties" class="nav-link">
+                                <i class="fas fa-list"></i>
+                                <span>Properties</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-page="rag-chat" class="nav-link">
+                                <i class="fas fa-comments"></i>
+                                <span>Chat with AI</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Customization</h3>
+                    <ul>
+                        <li>
+                            <a href="#" data-page="analysis-params" class="nav-link">
+                                <i class="fas fa-sliders-h"></i>
+                                <span>Analysis Parameters</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-page="filters" class="nav-link">
+                                <i class="fas fa-filter"></i>
+                                <span>Filters & Search</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Export</h3>
+                    <ul>
+                        <li>
+                            <a href="#" data-action="export-csv" class="nav-link">
+                                <i class="fas fa-download"></i>
+                                <span>Export as CSV</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-action="export-json" class="nav-link">
+                                <i class="fas fa-file-json"></i>
+                                <span>Export as JSON</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="settings-toggle">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="breadcrumb">
+                    <span id="breadcrumb-text">Dashboard</span>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search properties...">
+                    </div>
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="page active">
+                    <div class="page-header">
+                        <h1>Dashboard</h1>
+                        <p>Overview of your real estate analysis</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #3498db;">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Total Properties</h3>
+                                <p class="stat-value" id="total-properties">0</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #2ecc71;">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Buy Recommendations</h3>
+                                <p class="stat-value" id="buy-recommendations">0</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #e74c3c;">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Rent Recommendations</h3>
+                                <p class="stat-value" id="rent-recommendations">0</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #f39c12;">
+                                <i class="fas fa-rupee-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Avg Property Price</h3>
+                                <p class="stat-value" id="avg-price">₹0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-section">
+                        <div class="chart-container">
+                            <h3>Buy vs Rent Distribution</h3>
+                            <canvas id="decision-chart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Price Distribution</h3>
+                            <canvas id="price-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Properties Page -->
+                <div id="properties-page" class="page">
+                    <div class="page-header">
+                        <h1>Properties</h1>
+                        <p>Browse and analyze properties</p>
+                    </div>
+
+                    <div class="filters-bar">
+                        <div class="filter-group">
+                            <label>City</label>
+                            <select id="city-filter">
+                                <option value="all">All Cities</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Decision</label>
+                            <select id="decision-filter">
+                                <option value="all">All</option>
+                                <option value="Buy">Buy</option>
+                                <option value="Rent">Rent</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Price Range</label>
+                            <div class="price-inputs">
+                                <input type="number" id="min-price" placeholder="Min">
+                                <span>-</span>
+                                <input type="number" id="max-price" placeholder="Max">
+                            </div>
+                        </div>
+                        <button id="apply-filters-btn" class="btn btn-primary">Apply Filters</button>
+                        <button id="reset-filters-btn" class="btn btn-secondary">Reset</button>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="properties-table">
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>City</th>
+                                    <th>Price (₹)</th>
+                                    <th>Area (Sqft)</th>
+                                    <th>BHK</th>
+                                    <th>Price/Sqft</th>
+                                    <th>Wealth (Buy)</th>
+                                    <th>Wealth (Rent)</th>
+                                    <th>Decision</th>
+                                </tr>
+                            </thead>
+                            <tbody id="properties-tbody">
+                                <tr><td colspan="9" class="text-center">Loading properties...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pagination">
+                        <button id="prev-page-btn" class="btn btn-secondary" disabled>Previous</button>
+                        <span id="page-info">Page 1</span>
+                        <button id="next-page-btn" class="btn btn-secondary">Next</button>
+                    </div>
+                </div>
+
+                <!-- Analysis Parameters Page -->
+                <div id="analysis-params-page" class="page">
+                    <div class="page-header">
+                        <h1>Analysis Parameters</h1>
+                        <p>Customize the financial analysis parameters</p>
+                    </div>
+
+                    <div class="params-container">
+                        <div class="params-card">
+                            <h3>Loan Parameters</h3>
+                            <div class="param-group">
+                                <label for="down-payment">Down Payment (%)</label>
+                                <input type="number" id="down-payment" value="20" min="0" max="100" step="5">
+                                <p class="param-help">Percentage of property price as down payment</p>
+                            </div>
+                            <div class="param-group">
+                                <label for="loan-rate">Loan Interest Rate (%)</label>
+                                <input type="number" id="loan-rate" value="8.5" min="0" step="0.1">
+                                <p class="param-help">Annual interest rate for home loan</p>
+                            </div>
+                            <div class="param-group">
+                                <label for="tax-rate">Tax Rate (%)</label>
+                                <input type="number" id="tax-rate" value="20" min="0" max="100" step="1">
+                                <p class="param-help">Income tax rate for calculations</p>
+                            </div>
+                            <div class="param-group">
+                                <label for="appreciation-rate">Property Appreciation (%/year)</label>
+                                <input type="number" id="appreciation-rate" value="5" min="0" step="0.5">
+                                <p class="param-help">Annual property price appreciation</p>
+                            </div>
+                        </div>
+
+                        <div class="params-card">
+                            <h3>Rent Parameters</h3>
+                            <div class="param-group">
+                                <label for="rent-escalation">Rent Escalation (%/year)</label>
+                                <input type="number" id="rent-escalation" value="5" min="0" step="0.5">
+                                <p class="param-help">Annual increase in rent</p>
+                            </div>
+                            <div class="param-group">
+                                <label for="invest-rate">Investment Return Rate (%/year)</label>
+                                <input type="number" id="invest-rate" value="10" min="0" step="0.5">
+                                <p class="param-help">Annual return on down payment investment</p>
+                            </div>
+                            <div class="param-group">
+                                <label for="monthly-saving">Monthly Savings (₹)</label>
+                                <input type="number" id="monthly-saving" value="15000" min="0" step="1000">
+                                <p class="param-help">Monthly amount saved while renting</p>
+                            </div>
+                        </div>
+
+                        <div style="grid-column: 1 / -1;">
+                            <button id="run-analysis-btn" class="btn btn-success">Run Analysis with New Parameters</button>
+                            <button id="reset-params-btn" class="btn btn-secondary">Reset to Default</button>
+                        </div>
+                    </div>
+
+                    <div id="analysis-status" class="analysis-status" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Running analysis... This may take a moment.</p>
+                    </div>
+                </div>
+
+                <!-- Filters Page -->
+                <div id="filters-page" class="page">
+                    <div class="page-header">
+                        <h1>Filters & Search</h1>
+                        <p>Advanced filtering options</p>
+                    </div>
+
+                    <div class="filters-container">
+                        <div class="filter-card">
+                            <h3>Location Filter</h3>
+                            <input type="text" id="location-search" placeholder="Search locations..." class="filter-input">
+                            <div id="location-list" class="filter-list">
+                                <p class="text-muted">Select a location from properties page</p>
+                            </div>
+                        </div>
+
+                        <div class="filter-card">
+                            <h3>BHK Filter</h3>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" value="1"> 1 BHK</label>
+                                <label><input type="checkbox" value="2"> 2 BHK</label>
+                                <label><input type="checkbox" value="3"> 3 BHK</label>
+                                <label><input type="checkbox" value="4"> 4+ BHK</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-card">
+                            <h3>Area Filter</h3>
+                            <label>Min Area (Sqft)</label>
+                            <input type="number" id="min-area" placeholder="Minimum" class="filter-input">
+                            <label>Max Area (Sqft)</label>
+                            <input type="number" id="max-area" placeholder="Maximum" class="filter-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat with AI Page -->
+                <div id="rag-chat-page" class="page">
+                    <div class="page-header">
+                        <h1>Chat with AI</h1>
+                        <p>Ask questions about the properties and analysis</p>
+                    </div>
+
+                    <div class="chat-container">
+                        <div id="chat-messages" class="chat-messages">
+                            <div class="chat-message bot-message">
+                                <p>Hello! I'm your Real Estate Analysis Assistant. Ask me anything about the properties, buy vs rent decisions, loan calculations, or investment comparisons.</p>
+                            </div>
+                        </div>
+
+                        <div class="chat-input-area">
+                            <input type="text" id="chat-input" placeholder="Ask a question..." autocomplete="off">
+                            <button id="send-chat-btn" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
